@@ -1,9 +1,14 @@
 steps:
   - label: "Build and push multi-arch image"
     commands:
+      # Remove existing builder if it exists
       - docker buildx rm mybuilder || true
+
+      # Create a new builder instance and bootstrap
       - docker buildx create --use --name mybuilder
       - docker buildx inspect --bootstrap
+
+      # Login to Docker and build multi-arch image
       - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
       - docker buildx build --platform linux/amd64,linux/arm64 -t ${DOCKER_USERNAME}/multi-arch-app:latest --push .
     agents:
