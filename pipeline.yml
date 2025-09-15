@@ -9,5 +9,5 @@ steps:
     agents:
       queue: buildkite-queue
     env:
-      DOCKER_USERNAME: "${DOCKER_USERNAME}"   # Set in Buildkite pipeline settings
-      DOCKER_PASSWORD: "${DOCKER_PASSWORD}"   # Set in Buildkite pipeline settings, mark as secret
+      DOCKER_USERNAME: "${DOCKER_USERNAME}"   
+      DOCKER_PASSWORD: "${DOCKER_PASSWORD}"   
