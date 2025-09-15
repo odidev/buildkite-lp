@@ -1,14 +1,21 @@
-env:
-  DOCKER_USERNAME: "abhay900"
-  DOCKER_PASSWORD: "dckr_pat_d5J65dFjKrITnOREWZR1dWEZA7U"
-
 steps:
   - label: "Build and push multi-arch image"
     commands:
+      # Remove existing builder if it exists
       - docker buildx rm mybuilder || true
+
+      # Create a new builder instance and bootstrap
       - docker buildx create --use --name mybuilder
       - docker buildx inspect --bootstrap
+
+      # Login to Docker using secrets
       - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
-      - docker buildx build --platform linux/amd64,linux/arm64 -t abhay900/multi-arch-app:latest --push .
+
+      # Build and push multi-arch Docker image
+      - docker buildx build --platform linux/amd64,linux/arm64 \
+        -t abhay900/multi-arch-app:latest --push .
     agents:
       queue: buildkite-queue
+    env:
+      DOCKER_USERNAME: "${DOCKER_USERNAME}"   # Pull from Buildkite environment variables
+      DOCKER_PASSWORD: "${DOCKER_PASSWORD}"   # Pull from Buildkite environment variables
