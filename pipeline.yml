@@ -1,7 +1,7 @@
 steps:
   - label: "Build and push multi-arch image"
     commands:
-      # Remove existing builder if it exists
+
       - docker buildx rm mybuilder || true
 
       # Create a new builder instance and bootstrap
