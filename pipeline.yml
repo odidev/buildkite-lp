@@ -7,4 +7,7 @@ steps:
       - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
       - docker buildx build --platform linux/amd64,linux/arm64 -t ${DOCKER_USERNAME}/multi-arch-app:latest --push .
     agents:
-      queue: buildkite-queue       
+      queue: buildkite-queue
+    env:
+      DOCKER_USERNAME: "${DOCKER_USERNAME}"
+      DOCKER_PASSWORD: "${DOCKER_PASSWORD}"
