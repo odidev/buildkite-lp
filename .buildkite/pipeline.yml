@@ -1,11 +1,4 @@
 steps:
-  - label: "Debug environment"
-    commands:
-      - echo "DOCKER_USERNAME is: $DOCKER_USERNAME"
-      - echo "DOCKER_PASSWORD is: $DOCKER_PASSWORD"
-    agents:
-      queue: buildkite-queue
-
   - label: "Build and push multi-arch image"
     commands:
       - docker buildx rm mybuilder || true
