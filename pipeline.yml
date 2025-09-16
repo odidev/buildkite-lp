@@ -1,6 +1,6 @@
 env:
   DOCKER_USERNAME: "abhay900"
-  DOCKER_PASSWORD: "dckr_pat_GwNwQTgQ3EV1Qwml_cScNHt-MJI"
+  DOCKER_PASSWORD: "dckr_pat_4lwatfEFAPcN3davjQ2aSVZLU74"
 
 steps:
   - label: "Build and push multi-arch image"
