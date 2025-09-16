@@ -1,7 +1,4 @@
 steps:
-  - label: "Check environment variables"
+  - label: "Check env"
     commands:
-      - echo "DOCKER_USERNAME is: $DOCKER_USERNAME"
-      - echo "DOCKER_PASSWORD is: ${DOCKER_PASSWORD:0:4}****"
-    agents:
-      queue: buildkite-queue
+      - {echo "DOCKER_USERNAME is: \"$DOCKER_USERNAME\""}
