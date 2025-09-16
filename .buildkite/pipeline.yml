@@ -1,7 +1,8 @@
 steps:
-  - label: "Debug environment"
+  - label: "Debug Environment"
     commands:
-      - echo "DOCKER_USERNAME=$DOCKER_USERNAME"
-      - echo "DOCKER_PASSWORD is set? ${DOCKER_PASSWORD:+yes}"
+      - echo "Checking the build environment..."
+      - env | grep DOCKER_
+      - whoami
     agents:
       queue: buildkite-queue
