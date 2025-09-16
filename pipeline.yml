@@ -1,6 +1,7 @@
 steps:
   - label: "Build and push multi-arch image"
     commands:
+      - docker run --privileged --rm tonistiigi/binfmt --install all
       - docker buildx rm mybuilder || true
       - docker buildx create --use --name mybuilder
       - docker buildx inspect --bootstrap
