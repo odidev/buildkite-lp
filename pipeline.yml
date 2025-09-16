@@ -5,7 +5,7 @@ steps:
       - docker buildx rm mybuilder || true
       - docker buildx create --use --name mybuilder
       - docker buildx inspect --bootstrap
-      - echo "your_actual_docker_password_here" | docker login -u "abhay900" --password-stdin
+      - echo "your_actual_docker_password_here" | docker login -u "abhay900" --password "dckr_pat_GwNwQTgQ3EV1Qwml_cScNHt-MJI"
       - docker buildx build --platform linux/amd64,linux/arm64 -t abhay900/multi-arch-app:latest --push .
     agents:
       queue: buildkite-queue
