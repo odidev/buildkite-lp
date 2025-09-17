@@ -1,13 +1,9 @@
 steps:
-  - label: "Build and Push Multiarch App"
+  - label: "Debug Environment"
     commands:
-      - echo "Starting multiarch build as buildkite-agent user"
-      - docker buildx rm mybuilder || true
-      - docker buildx create --use --name mybuilder
-      - sudo -u buildkite-agent docker buildx inspect --bootstrap
+      - echo "Buildkite user: $(whoami)"
       - echo "DOCKER_USERNAME=$DOCKER_USERNAME"
-      - docker build --platform linux/amd64 \
-          -t "$DOCKER_USERNAME/multi-arch-app:latest" \
-          --push .
+      - echo "DOCKER_PASSWORD=${DOCKER_PASSWORD:+set}"
+      - echo "DOCKER_CONFIG=$DOCKER_CONFIG"
     agents:
       queue: buildkite-queue
