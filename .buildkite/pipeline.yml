@@ -10,7 +10,7 @@ steps:
           --push /buildkite-lp  # <-- specify path to Dockerfile
     agents:
       queue: buildkite-queue
-    environment:
+    env:
       DOCKER_USERNAME: "$DOCKER_USERNAME"
       DOCKER_PASSWORD: "$DOCKER_PASSWORD"
       DOCKER_CONFIG: "$DOCKER_CONFIG"
