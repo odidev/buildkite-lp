@@ -1,8 +1,13 @@
 steps:
-  - label: "Debug Environment"
+  - label: "Build and Push Multiarch Python Image"
     commands:
-      - echo "Checking the build environment..."
-      - env | grep DOCKER_
-      - whoami
+      - echo "Starting multiarch build as buildkite-agent user"
+      - sudo -u buildkite-agent docker buildx rm mybuilder || true
+      - sudo -u buildkite-agent docker buildx create --use --name mybuilder
+      - sudo -u buildkite-agent docker buildx inspect --bootstrap
+      - echo "$DOCKER_PASSWORD" | sudo -u buildkite-agent docker --config /etc/buildkite-agent/.docker login -u "$DOCKER_USERNAME" --password-stdin
+      - sudo -u buildkite-agent docker buildx build --platform linux/amd64,linux/arm64 \
+          -t "$DOCKER_USERNAME/multi-arch-app:latest" \
+          --push .
     agents:
       queue: buildkite-queue
