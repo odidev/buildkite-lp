@@ -1,8 +1,16 @@
+env:
+  DOCKER_USERNAME: "abhay900"
+  DOCKER_PASSWORD: "dckr_pat_xgM2gQLAPzDbJ3VKsGkaCYkRChA"
+
 steps:
-  - label: "Debug Environment"
+  - label: "Build and push multi-arch image"
     commands:
-      - echo "Checking the build environment..."
+      - docker buildx rm mybuilder || true
+      - docker buildx create --use --name mybuilder
+      - docker buildx inspect --bootstrap
       - env | grep DOCKER_
       - whoami
+      - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+      - docker buildx build --platform linux/amd64,linux/arm64 -t ${DOCKER_USERNAME}/multi-arch-app:latest --push .
     agents:
       queue: buildkite-queue
