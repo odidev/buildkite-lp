@@ -1,18 +1,18 @@
 steps:
   - label: "Build and Push Multiarch Image"
     commands:
-      # Use a directory in the user's home for Docker credentials
+      # 1️⃣ Use home directory for Docker credentials to avoid permission errors
       - export DOCKER_CONFIG=$HOME/.docker
       - mkdir -p $DOCKER_CONFIG
 
-      # Login to Docker Hub securely using environment variables
+      # 2️⃣ Login to Docker Hub using secure environment variables
       - echo "$DOCKER_PASSWORD" | docker login --username "$DOCKER_USERNAME" --password-stdin
 
-      # Use the multiarch builder
+      # 3️⃣ Use the multiarch builder
       - docker buildx use multiarch
       - docker buildx inspect --bootstrap
 
-      # Build and push the multiarch image
+      # 4️⃣ Build and push the multiarch image
       - docker buildx build --platform linux/amd64,linux/arm64 \
           -t "$DOCKER_USERNAME/myimage:latest" \
           --push .
