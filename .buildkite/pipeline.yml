@@ -5,7 +5,6 @@ env:
 steps:
   - label: "Build and push multi-arch image"
     commands:
-      - echo "Buildkite agent user: $(whoami)"
       - echo "DOCKER_USERNAME: ${DOCKER_USERNAME:-not set}"
       - echo "DOCKER_PASSWORD: ${DOCKER_PASSWORD:+set}"
       - echo "Docker config directory: $DOCKER_CONFIG"
