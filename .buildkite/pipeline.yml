@@ -7,7 +7,7 @@ steps:
       - sudo -u buildkite-agent docker buildx inspect --bootstrap
       - sudo -u buildkite-agent docker buildx build --platform linux/amd64,linux/arm64 \
           -t "$DOCKER_USERNAME/multi-arch-app:latest" \
-          --push /buildkite-lp  # <-- specify path to Dockerfile
+          --push .  # <-- specify path to Dockerfile
     agents:
       queue: buildkite-queue
     env:
