@@ -2,6 +2,8 @@ steps:
   - label: "Build and Push Python Microservice"
     commands:
       - export DOCKER_CONFIG=$HOME/.docker
+      - env | grep DOCKER_
+      - whoami
       - echo "$DOCKER_PASSWORD" | docker login --username "$DOCKER_USERNAME" --password-stdin
       - docker buildx use multiarch
       - docker buildx inspect --bootstrap
