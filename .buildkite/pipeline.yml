@@ -2,10 +2,10 @@ steps:
   - label: "Build and Push Multiarch App"
     commands:
       - echo "Starting multiarch build as buildkite-agent user"
-      - sudo -u buildkite-agent docker buildx rm mybuilder || true
-      - sudo -u buildkite-agent docker buildx create --use --name mybuilder
-      - sudo -u buildkite-agent docker buildx inspect --bootstrap
-      - sudo -u buildkite-agent docker buildx build --platform linux/amd64,linux/arm64 \
+      - docker buildx rm mybuilder || true
+      - docker buildx create --use --name mybuilder
+      - docker buildx inspect --bootstrap
+      - docker buildx build --platform linux/amd64,linux/arm64 \
           -t "$DOCKER_USERNAME/multi-arch-app:latest" \
           --push /buildkite-lp  # <-- path to your Dockerfile
     agents:
