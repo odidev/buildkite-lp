@@ -4,7 +4,7 @@ steps:
       - export DOCKER_CONFIG=$HOME/.docker
       - env | grep DOCKER_
       - whoami
-      - echo "$DOCKER_PASSWORD" | docker login --username "$DOCKER_USERNAME" --password-stdin
+      - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD"
       - docker buildx use multiarch
       - docker buildx inspect --bootstrap
       - docker buildx build --platform linux/amd64,linux/arm64 \
