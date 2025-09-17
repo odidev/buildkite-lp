@@ -7,6 +7,3 @@ steps:
       - docker buildx build --platform linux/amd64,linux/arm64 \
           -t "$DOCKER_USERNAME/myimage:latest" \
           --push .
-    env:
-      DOCKER_USERNAME: "your-dockerhub-username"
-      DOCKER_PASSWORD: "your-access-token"
