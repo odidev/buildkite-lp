@@ -5,6 +5,10 @@ env:
 steps:
   - label: "Build and push multi-arch image"
     commands:
+      - echo "Buildkite agent user: $(whoami)"
+      - echo "DOCKER_USERNAME: ${DOCKER_USERNAME:-not set}"
+      - echo "DOCKER_PASSWORD: ${DOCKER_PASSWORD:+set}"
+      - echo "Docker config directory: $DOCKER_CONFIG"
       - docker buildx rm mybuilder || true
       - docker buildx create --use --name mybuilder
       - docker buildx inspect --bootstrap
@@ -13,4 +17,3 @@ steps:
       - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
       - docker buildx build --platform linux/amd64,linux/arm64 -t ${DOCKER_USERNAME}/multi-arch-app:latest --push .
     agents:
-      queue: buildkite-queue
