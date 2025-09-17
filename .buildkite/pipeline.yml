@@ -1,11 +1,5 @@
 steps:
-  - label: "Debug Buildkite + Docker Env"
+  - label: "Check Env"
     commands:
-      - echo "Buildkite agent user: $(whoami)"
-      - echo "Home directory: $HOME"
-      - echo "Docker environment variables:"
-      - env | grep DOCKER_
-      - echo "Docker info check:"
-      - docker info | grep -E 'Username|UID|GID'
-    agents:
-      queue: buildkite-queue
+      - echo "DOCKER_USERNAME: $DOCKER_USERNAME"
+      - echo "DOCKER_PASSWORD: ${DOCKER_PASSWORD:+set}"
