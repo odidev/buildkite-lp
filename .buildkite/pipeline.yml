@@ -1,7 +1,7 @@
 steps:
   - label: "Build and Push Multiarch Image"
     commands:
-      # Ensure Docker credentials are stored in user's home directory to avoid /etc/containers permissions issues
+      # Use a directory in the user's home for Docker credentials
       - export DOCKER_CONFIG=$HOME/.docker
       - mkdir -p $DOCKER_CONFIG
 
@@ -16,6 +16,5 @@ steps:
       - docker buildx build --platform linux/amd64,linux/arm64 \
           -t "$DOCKER_USERNAME/myimage:latest" \
           --push .
-    # Do not override env here; use pipeline-level secure environment variables
     agents:
       queue: buildkite-queue
