@@ -1,9 +1,8 @@
 steps:
-  - label: "Build and Push Multiarch Python Image"
+  - label: "Check Buildkite User"
     commands:
-      - docker buildx use multiarch
-      - docker buildx inspect --bootstrap
-      - echo "$DOCKER_PASSWORD" | docker login --username "$DOCKER_USERNAME" --password-stdin
-      - docker buildx build --platform linux/amd64,linux/arm64 -t "$DOCKER_USERNAME/myapp:latest" --push .
+      - whoami
+      - id
+      - echo "HOME: $HOME"
     agents:
       queue: buildkite-queue
