@@ -1,7 +1,7 @@
 steps:
   - label: "Debug Environment"
     commands:
-      - echo "Buildkite user: $(whoami)"
+      - echo "Buildkite-agent user: $(whoami)"
       - echo "DOCKER_USERNAME=$DOCKER_USERNAME"
       - echo "DOCKER_PASSWORD=${DOCKER_PASSWORD:+set}"
       - echo "DOCKER_CONFIG=$DOCKER_CONFIG"
