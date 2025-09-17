@@ -1,10 +1,10 @@
 steps:
   - label: "Build and Push Python Microservice"
     commands: |
-      sudo docker buildx rm mybuilder || true
-      sudo docker buildx create --use --name mybuilder
+      docker buildx rm mybuilder || true
+      docker buildx create --use --name mybuilder
       docker buildx inspect --bootstrap
-      echo "$DOCKER_PASSWORD" | sudo docker login -u "$DOCKER_USERNAME" -u $DOCKER_PASSWORD"
-      sudo docker buildx build --platform linux/amd64,linux/arm64 -t "$DOCKER_USERNAME/multi-arch-app:latest" --push .
+      echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" -u $DOCKER_PASSWORD"
+      docker buildx build --platform linux/amd64,linux/arm64 -t "$DOCKER_USERNAME/multi-arch-app:latest" --push .
     agents:
       queue: buildkite-queue
