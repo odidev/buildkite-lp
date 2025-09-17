@@ -1,5 +1,30 @@
 steps:
-  - label: "Check Env"
+  # Step 1 — Debug environment variables
+  - label: "Check Environment"
     commands:
-      - echo "DOCKER_USERNAME: $DOCKER_USERNAME"
+      - echo "Buildkite agent user: $(whoami)"
+      - echo "Home directory: $HOME"
+      - echo "Docker environment variables:"
+      - echo "DOCKER_USERNAME: ${DOCKER_USERNAME:-not set}"
       - echo "DOCKER_PASSWORD: ${DOCKER_PASSWORD:+set}"
+      - echo "Docker info check:"
+      - docker info | grep -E 'Username|UID|GID'
+    agents:
+      queue: buildkite-queue
+
+  # Step 2 — Build and push multiarch Docker image
+  - label: "Build and Push Multiarch Python Image"
+    commands:
+      - docker buildx use multiarch
+      - docker buildx inspect --bootstrap
+      - echo "$DOCKER_PASSWORD" | docker login --username "$DOCKER_USERNAME" --password-stdin
+      - docker buildx build --platform linux/amd64,linux/arm64 \
+          -t "$DOCKER_USERNAME/myapp:latest" \
+          --push .
+    agents:
+      queue: buildkite-queue
+    # Optional: explicitly define env if hooks/environment not working
+    # Uncomment the following block if you want to pass variables directly in YAML
+    # env:
+    #   DOCKER_USERNAME: "abhay900"
+    #   DOCKER_PASSWORD: "YOUR_DOCKER_TOKEN"
