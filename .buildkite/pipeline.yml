@@ -1,20 +1,13 @@
 steps:
-  - label: "Build and Push Multiarch Image"
+  - label: "Build and Push Python Microservice"
     commands:
-      # 1️⃣ Use home directory for Docker credentials to avoid permission errors
       - export DOCKER_CONFIG=$HOME/.docker
       - mkdir -p $DOCKER_CONFIG
-
-      # 2️⃣ Login to Docker Hub using secure environment variables
       - echo "$DOCKER_PASSWORD" | docker login --username "$DOCKER_USERNAME" --password-stdin
-
-      # 3️⃣ Use the multiarch builder
       - docker buildx use multiarch
       - docker buildx inspect --bootstrap
-
-      # 4️⃣ Build and push the multiarch image
       - docker buildx build --platform linux/amd64,linux/arm64 \
-          -t "$DOCKER_USERNAME/myimage:latest" \
+          -t "$DOCKER_USERNAME/myapp:latest" \
           --push .
     agents:
       queue: buildkite-queue
