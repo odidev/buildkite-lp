@@ -1,8 +1,12 @@
 steps:
-  - label: "Debug Environment"
+  - label: "Build and Push Multiarch Image"
     commands:
-      - echo "Checking the build environment..."
-      - env | grep DOCKER_
-      - whoami
-    agents:
-      queue: buildkite-queue
+      - echo "$DOCKER_PASSWORD" | docker login --username "$DOCKER_USERNAME" --password-stdin
+      - docker buildx use multiarch
+      - docker buildx inspect --bootstrap
+      - docker buildx build --platform linux/amd64,linux/arm64 \
+          -t "$DOCKER_USERNAME/myimage:latest" \
+          --push .
+    env:
+      DOCKER_USERNAME: "your-dockerhub-username"
+      DOCKER_PASSWORD: "your-access-token"
