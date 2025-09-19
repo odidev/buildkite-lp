@@ -1,16 +1,16 @@
 steps:
   - label: "Build and Push Multiarch App"
     commands:
+      - echo "Testing env hook..."
+      - echo "DOCKER_USERNAME is: $DOCKER_USERNAME"  
+      - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
       - echo "Starting multiarch build as buildkite-agent user"
       - docker buildx rm mybuilder || true
       - docker buildx create --use --name mybuilder
       - docker buildx inspect --bootstrap
       - docker buildx build --platform linux/amd64,linux/arm64 \
           -t "$DOCKER_USERNAME/multi-arch-app:latest" \
-          --push /buildkite-lp  # <-- path to your Dockerfile
+          --push .  
     agents:
-      queue: buildkite-queue
-    env:
-      DOCKER_USERNAME: "$DOCKER_USERNAME"
-      DOCKER_PASSWORD: "$DOCKER_PASSWORD"
-      DOCKER_CONFIG: "$DOCKER_CONFIG"
+      queue: buildkite-queue1
+
