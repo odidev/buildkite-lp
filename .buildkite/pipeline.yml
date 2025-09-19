@@ -2,7 +2,7 @@ steps:
   - label: "Build and Push Multiarch App"
     commands:
       - echo "Testing env hook..."
-      - echo "DOCKER_USERNAME is: $DOCKER_USERNAME"  
+      - echo DOCKER_USERNAME is: "$DOCKER_USERNAME"  
       - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
       - echo "Starting multiarch build as buildkite-agent user"
       - docker buildx rm mybuilder || true
